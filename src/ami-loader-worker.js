@@ -40,8 +40,6 @@ class AMILoaderWorker
               result[k] = data.value[k];
             }
             
-console.log(result);
-
             resultFn(result);
             if (closeWhenLoaded) {
               self.wk.terminate();
