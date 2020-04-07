@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+    </style>
+    <link rel="shortcut icon" href="res/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="res/favicon.ico" type="image/x-icon">
+    <script type="text/javascript" src="libs/three.min.js"></script>
+    <script type="text/javascript" src="libs/ami.min.js"></script>
+    <script type="text/javascript" src="src/ami-loader.js"></script>
+    <script type="text/javascript" src="src/ami-loader-worker.js"></script>
+    <script type="text/javascript" src="src/files.js"></script>
+    <script type="text/javascript" src="src/main.js"></script>
+    <title>AMI viewer loader experiment</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app
+    </noscript>
+    <div>
+      <div class="train" style="position: fixed; width: 175px;">
+        <img id="train" style="position: relative;" src="res/train.gif">
+        <div id="distance" style="text-align: center; font-size: medium;">0 m</div>
+      </div>
+      <div style="padding-top: 200px; padding-left: 10px; text-align: center; ">
+        <h1 style="font-size: x-large; text-align: center;" id="result">Waiting ...</h1>
+        <p style="padding-top: 5px;">
+          <input style="width: 200px; font-size: x-large;" type="button" value="Load without worker" id="btnLoadWithoutWorker">
+        </p>
+        <p style="padding-top: 10px;">
+          <input style="width: 200px; font-size: x-large;" type="button" value="Load with worker" id="btnLoadWithWorker">
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
