@@ -19,7 +19,7 @@ const startAnimation = function(position)
 
   position += 1;
 
-  const train = document.querySelector('.train'),;
+  const train = document.querySelector('.train');
   train.style.width = '175px';
   train.style.position = 'fixed';
   train.style.left = position % window.innerWidth + 'px';
@@ -36,7 +36,7 @@ const loadWithoutWorker = function()
   new AMILoader(
     () => setInfo('Downloading files ...'),
     () => setInfo('Begin parse files [with LOW FPS] ...')
-  ).load('http://localhost/dicom/1.2.156.112536.1.2118.80179180246.13490887510.209.dcm')
+  ).load(FILES_LIST)
   .then(
     () => {  setInfo('Done'); changeButtonsAvailability(false); }
   ).catch(
@@ -56,7 +56,7 @@ const loadWithWorker = function()
     () => setInfo('Downloading files ...'),
     () => setInfo('Begin parse files ...'),
     () => setInfo('Parsing files [with HIGH FPS] ...')
-  ).load('http://localhost/dicom/1.2.156.112536.1.2118.80179180246.13490887510.209.dcm');
+  ).load(FILES_LIST);
 }
 
 const setInfo = function(text) 

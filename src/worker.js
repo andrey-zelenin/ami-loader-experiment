@@ -2,9 +2,10 @@
 self.window = self;
 
 // import additional libraries
+// IMPORTANT: change if needed for debug
 importScripts(
-  '', // v.0.99
-  ''  // EMSOW custom build
+  '/ami-loader-experiment/libs/three.min.js', // v.0.99
+  '/ami-loader-experiment/libs/ami.min.js'    // EMSOW custom build
 );
 
 let loader;

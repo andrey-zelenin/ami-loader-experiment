@@ -12,7 +12,8 @@ class AMILoaderWorker
     //      https://developer.mozilla.org/ru/docs/DOM/Using_web_workers
     //      https://www.html5rocks.com/en/tutorials/workers/basics/
     if (window.Worker) {
-      self.wk = new Worker(''); // IMPORTANT: change if needed for debug
+      // IMPORTANT: change if needed for debug
+      self.wk = new Worker('/ami-loader-experiment/src/worker.js');
     } else {
       alert('Your browser doesn\'t support web workers');
     }
@@ -39,6 +40,8 @@ class AMILoaderWorker
               result[k] = data.value[k];
             }
             
+console.log(result);
+
             resultFn(result);
             if (closeWhenLoaded) {
               self.wk.terminate();
