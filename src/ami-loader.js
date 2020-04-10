@@ -1,13 +1,20 @@
 class AMILoader 
 {
-  constructor(downloadingFn = () => {},  parseBeginFn = () => {}) 
+  constructor(downloadingFn = (loaded, total) => {},  parseBeginFn = () => {}) 
   {
-    self.loader = new AMI.VolumeLoader(null, null);
-    self.loader.on('load-start', function () {
-      downloadingFn();
-    });
-    self.loader.on('parse-start', function () {
-      parseBeginFn();
+    this.downloadingFn = downloadingFn;
+    this.parseBeginFn = parseBeginFn;    
+    this.loader = new AMI.VolumeLoader(false, () => {
+      return {
+        update: (value, total, mode) => {
+          if (mode === 'load') {
+            this.downloadingFn(value, total);
+            if (value / total === 1) {
+              this.parseBeginFn();
+            }
+          }
+        }
+      };
     });
   }
 
@@ -16,22 +23,22 @@ class AMILoader
     let requests = new Map();
 
     return new Promise((resolve, reject) => {
-      self.loader
+      this.loader
         .load(links, requests)
         .then(() => {
           requests = null;
           let series,
-              numberOfFiles = self.loader.data.length;
+              numberOfFiles = this.loader.data.length;
 
           if (numberOfFiles > 1) {
-            series = self.loader.data[0];
-            self.loader.data.shift();
-            series = series.mergeSeries(self.loader.data);
+            series = this.loader.data[0];
+            this.loader.data.shift();
+            series = series.mergeSeries(this.loader.data);
           } else {
-            series = self.loader.data;
+            series = this.loader.data;
           }
 
-          self.loader.free();
+          this.loader = null;
 
           if (series.length > 1) {
             reject(new Error('Several series'));

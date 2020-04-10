@@ -30,23 +30,27 @@ const startAnimation = function(position)
 
 const loadWithoutWorker = function() 
 {
-  setInfo('Begin test (without service worker) ...');
   changeButtonsAvailability(true);
 
   new AMILoader(
-    () => setInfo('Downloading files ...'),
-    () => setInfo('Begin parse files [with LOW FPS] ...')
+    (loaded, total) => document.getElementById('progress').textContent = `(${loaded} / ${total})`,
+    () => document.getElementById('parsing').textContent = 'parse with LOW FPS'
   ).load(FILES_LIST)
   .then(
-    () => {  setInfo('Done'); changeButtonsAvailability(false); }
+    () => {  
+      document.getElementById('result').textContent = 'done';
+      changeButtonsAvailability(false); 
+    }
   ).catch(
-    error => { setInfo('Error: ' + error); changeButtonsAvailability(false); }
+    error => { 
+      document.getElementById('result').textContent = 'Error: ' + error;
+      changeButtonsAvailability(false);
+    }
   )
 }
 
 const loadWithWorker = function() 
 {
-  setInfo('Begin test  (with service worker)...');
   changeButtonsAvailability(true);
 
   new AMILoaderWorker(

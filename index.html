@@ -10,6 +10,19 @@
         padding: 0;
         font-family: sans-serif;
       }
+      span {
+        font-size: 20pt; 
+        padding-bottom: 5pt;
+        padding-right: 30pt;
+        padding-left: 30pt;
+      }
+      div.info {
+        display: inline-grid;
+      }
+      input.lbl {
+        width: 250px; 
+        font-size: large;
+      }
     </style>
     <link rel="shortcut icon" href="res/favicon.ico" type="image/x-icon">
     <link rel="icon" href="res/favicon.ico" type="image/x-icon">
@@ -30,13 +43,15 @@
         <img id="train" style="position: relative;" src="res/train.gif">
         <div id="distance" style="text-align: center; font-size: medium;">0 m</div>
       </div>
-      <div style="padding-top: 200px; padding-left: 10px; text-align: center; ">
-        <h1 style="font-size: x-large; text-align: center;" id="result">Waiting ...</h1>
+      <div style="padding-top: 200px; padding-left: 10px; text-align: center;">
+        <div class="info"><span> Downloading </span><span id="progress">...</span></div>
+        <div class="info"><span> Parsing </span><span id="parsing">...</span></div>
+        <div class="info"><span> Result </span><span id="result">...</span></div>
         <p style="padding-top: 5px;">
-          <input style="width: 200px; font-size: x-large;" type="button" value="Load without worker" id="btnLoadWithoutWorker">
+          <input class="lbl" type="button" value="Load without worker" id="btnLoadWithoutWorker">
         </p>
         <p style="padding-top: 10px;">
-          <input style="width: 200px; font-size: x-large;" type="button" value="Load with worker" id="btnLoadWithWorker">
+          <input class="lbl" type="button" value="Load with worker" id="btnLoadWithWorker">
         </p>
       </div>
     </div>
