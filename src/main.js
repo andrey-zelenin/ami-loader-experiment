@@ -5,6 +5,7 @@ window.addEventListener('load', function() {
 
   // start animation for control loading process
   startAnimation(); 
+  showTime();
 
   // add button handlers
   document.getElementById('btnLoadWithoutWorker').onclick = loadWithoutWorker;
@@ -72,4 +73,33 @@ const changeButtonsAvailability = function(isDisabled)
 {
   document.getElementById('btnLoadWithoutWorker').disabled = isDisabled;
   document.getElementById('btnLoadWithWorker').disabled = isDisabled;
+}
+
+const showTime = function()
+{
+  let date = new Date(),
+      h = date.getHours();   // 0 - 23
+      m = date.getMinutes(); // 0 - 59
+      s = date.getSeconds(); // 0 - 59
+      session = 'AM';
+  
+  if (h == 0) {
+      h = 12;
+  }
+  
+  if (h > 12) {
+      h = h - 12;
+      session = 'PM';
+  }
+  
+  h = (h < 10) ? '0' + h : h;
+  m = (m < 10) ? '0' + m : m;
+  s = (s < 10) ? '0' + s : s;
+  
+  let time = h + ':' + m + ':' + s + ' ' + session;
+
+  document.getElementById('clock').innerText = time;
+  document.getElementById('clock').textContent = time;
+  
+  setTimeout(showTime, 1000);
 }

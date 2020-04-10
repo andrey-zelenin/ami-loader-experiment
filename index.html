@@ -23,6 +23,15 @@
         width: 250px; 
         font-size: large;
       }
+      div.clock {
+        position: absolute;
+        top: 27%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        color: #000000;
+        font-size: 20pt;
+        letter-spacing: 1pt;
+      }
     </style>
     <link rel="shortcut icon" href="res/favicon.ico" type="image/x-icon">
     <link rel="icon" href="res/favicon.ico" type="image/x-icon">
@@ -43,7 +52,8 @@
         <img id="train" style="position: relative;" src="res/train.gif">
         <div id="distance" style="text-align: center; font-size: medium;">0 m</div>
       </div>
-      <div style="padding-top: 200px; padding-left: 10px; text-align: center;">
+      <div id="clock" class="clock"></div>
+      <div style="padding-top: 235px; padding-left: 10px; text-align: center;">
         <div class="info"><span> Downloading </span><span id="progress">...</span></div>
         <div class="info"><span> Parsing </span><span id="parsing">...</span></div>
         <div class="info"><span> Result </span><span id="result">...</span></div>
