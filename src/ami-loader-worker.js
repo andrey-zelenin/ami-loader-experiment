@@ -4,9 +4,9 @@ class AMILoaderWorker
     resultFn = result => {},
     errorFn = error => {},
     closeWhenLoaded = true,
-    downloadingFn = () => {},
+    downloadingFn = (loaded, total) => {},
     parseBeginFn = () => {},
-    parsingFn = () => {}
+    parsingFn = (parsed, total) => {}
   ) {
     // see: https://developer.mozilla.org/ru/docs/Web/API/Web_Workers_API
     //      https://developer.mozilla.org/ru/docs/DOM/Using_web_workers
@@ -21,13 +21,13 @@ class AMILoaderWorker
     self.wk.onmessage = ({ data }) => {
       switch (data.type) {
         case 'downloading':
-          downloadingFn();
+          downloadingFn(data.value.loaded, data.value.total);
           break;
         case 'parseBegin':
           parseBeginFn();
           break;
         case 'parsing':
-          parsingFn();
+          parsingFn(data.value.parsed, data.value.total);
           break;
         case 'result':
           (() => {            

@@ -30,7 +30,7 @@ const loadFiles = (links) => {
           series = loader.data;
         }
 
-        loader.free();
+        this.loader = null;
 
         if (series.length > 1) {
           reject(new Error('Several series'));
@@ -43,15 +43,26 @@ const loadFiles = (links) => {
 }
 
 self.addEventListener('message', function messageListener(event) {
-  loader = new AMI.VolumeLoader(null, null);
-  loader.on('load-start', function () {
-    self.postMessage({ type: 'downloading' });
-  });
-  loader.on('parse-start', function () {
-    self.postMessage({ type: 'parseBegin' });
-  });
-  loader.on('parsing', function () {
-    self.postMessage({ type: 'parsing' });
+  loader =  new AMI.VolumeLoader(false, () => {
+    return {
+      update: (value, total, mode) => {
+        if (mode === 'load') {
+          self.postMessage({ 
+            type: 'downloading',
+            value: { loaded: value, total: total }
+          });
+
+          if (value / total === 1) {
+            self.postMessage({ type: 'parseBegin' });
+          } else {
+            self.postMessage({ 
+              type: 'parsing',
+              value: { parsed: value, total: total }
+            });
+          }
+        }
+      }
+    };
   });
   
   let promise = loadFiles(event.data.links);

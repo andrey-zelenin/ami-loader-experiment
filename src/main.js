@@ -34,7 +34,7 @@ const loadWithoutWorker = function()
   changeButtonsAvailability(true);
 
   new AMILoader(
-    (loaded, total) => document.getElementById('progress').textContent = `(${loaded} / ${total})`,
+    (loaded, total) => document.getElementById('downloading').textContent = `(${loaded} / ${total})`,
     () => document.getElementById('parsing').textContent = 'parse with LOW FPS'
   ).load(FILES_LIST)
   .then(
@@ -44,7 +44,7 @@ const loadWithoutWorker = function()
     }
   ).catch(
     error => { 
-      document.getElementById('result').textContent = 'Error: ' + error;
+      document.getElementById('result').textContent = 'error: ' + error;
       changeButtonsAvailability(false);
     }
   )
@@ -55,12 +55,18 @@ const loadWithWorker = function()
   changeButtonsAvailability(true);
 
   new AMILoaderWorker(
-    () => { setInfo('Done'); changeButtonsAvailability(false); },
-    error => { setInfo('Error: ' + error); changeButtonsAvailability(false); },
+    () => { 
+      document.getElementById('result').textContent = 'done'; 
+      changeButtonsAvailability(false);
+    },
+    error => {
+      document.getElementById('result').textContent = 'error: ' + error;; 
+      changeButtonsAvailability(false); 
+    },
     true,
-    () => setInfo('Downloading files ...'),
-    () => setInfo('Begin parse files ...'),
-    () => setInfo('Parsing files [with HIGH FPS] ...')
+    (loaded, total) => document.getElementById('downloading').textContent = `(${loaded} / ${total})`,
+    () => document.getElementById('parsing').textContent = 'parse with HIGH FPS',
+    (parsed, total) => document.getElementById('parsing').textContent = `(${parsed} / ${total})`
   ).load(FILES_LIST);
 }
 
